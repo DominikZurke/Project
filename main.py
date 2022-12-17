@@ -10,7 +10,7 @@ app = FastAPI()
 security = HTTPBasic()
 
 
-@app.get("/Prime")
+@app.get("/Prime/{number}")
 async def prime(number: int):
     if 1 < number <= 9223372036854775807:
         for i in range(2, int(number ** 0.5) + 1):
@@ -27,7 +27,6 @@ async def prime(number: int):
 async def invert(file: UploadFile = File(...)):
     original_image = Image.open(file.file)
     invert_image = ImageChops.invert(original_image)
-    invert_image.show()
     image = BytesIO()
     invert_image.save(image, "JPEG")
     image.seek(0)
@@ -35,7 +34,7 @@ async def invert(file: UploadFile = File(...)):
     return StreamingResponse(image, media_type="image/jpeg")
 
 
-@app.post("/Auth")
+@app.get("/Auth")
 def Authentication(credentials: HTTPBasicCredentials = Depends(security)):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
