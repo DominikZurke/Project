@@ -23,7 +23,7 @@ async def prime(number: int):
         return {"Out of range"}
 
 
-@app.post("/Invert")
+@app.post("/picture/invert")
 async def invert(file: UploadFile = File(...)):
     original_image = Image.open(file.file)
     invert_image = ImageChops.invert(original_image)
